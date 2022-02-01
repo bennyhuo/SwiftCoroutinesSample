@@ -97,15 +97,15 @@ class ContinuationWorkItem<T, E> where E: Error {
 
 func sc05_05() async {
     let task = Task { () -> Int in
-        let asyncRequest = ContinuationWorkItem<Int, Never> { context in
+        let asyncRequest = ContinuationWorkItem<Int, Never> { item in
             log("async start")
             var i = 0
-            while i < 10 && !context.isCancelled {
+            while i < 10 && !item.isCancelled {
                 Thread.sleep(forTimeInterval: 0.1)
                 i += 1
                 log("i = \(i)")
             }
-            if context.isCancelled {
+            if item.isCancelled {
                 log("async cancelled, \(i)")
                 return 0
             } else {

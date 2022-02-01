@@ -7,6 +7,6 @@ import Foundation
 @main
 struct App {
     static func main() async throws {
-        await sc05_05()
+        await sc05_0a()
     }
 }
