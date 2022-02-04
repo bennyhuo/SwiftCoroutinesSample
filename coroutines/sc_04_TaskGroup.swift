@@ -21,7 +21,9 @@ func sc04_01() async {
 
 
         for i in 1...(n / seg) {
-            group.addTask { add(seg * (i - 1), seg * i) }
+            group.addTask {
+                add(seg * (i - 1), seg * i)
+            }
         }
 
         if n % seg > 0 {
@@ -51,7 +53,9 @@ func sc04_02() async {
     _ = await withTaskGroup(of: Int.self) { (group) -> Int in
         taskGroup = group
         print("get group")
-        group.addTask { 1 }
+        group.addTask {
+            1
+        }
         return 0
     }
 
@@ -78,13 +82,15 @@ func sc04_03() async {
 //    }
 }
 
-extension String : Error {
+extension String: Error {
 
 }
 
 func sc04_04() async {
     _ = await withTaskGroup(of: Int.self) { group -> String in
-        group.addTask { 1 }
+        group.addTask {
+            1
+        }
         return "OK"
     }
 
@@ -98,6 +104,134 @@ func sc04_04() async {
     }
 }
 
-func sc04_05() async {
+func sc_04_05() async {
+    let result = await withThrowingTaskGroup(of: Int.self) { group -> Int in
+        group.addTask {
+            await Task.sleep(1000_000_000)
+            try await errorThrown()
+            return 0
+        }
 
+        group.addTask {
+            await Task.sleep(500_000_000)
+            return -1
+        }
+
+        group.addTask {
+            await Task.sleep(1500_000_000)
+            return 1
+        }
+
+        while (!group.isEmpty) {
+            do {
+                print(try await group.next() ?? "Nil")
+            } catch {
+                print(error)
+            }
+        }
+
+        return 100
+    }
+
+    print(result)
+}
+
+func getUserInfo(_ user: String) async -> String {
+    "name: \(user), age: 10"
+}
+
+func getFollowers(_ user: String) async -> [String] {
+    ["a@\(user)", "b@\(user)"]
+}
+
+func getProjects(_ user: String) async -> [String] {
+    ["KotlinDeepCopy", "TryRun", "KotlinValueDef"]
+}
+
+struct User {
+    let name: String
+    let info: String
+    let followers: [String]
+    let projects: [String]
+}
+
+enum Result {
+    case info(value: String)
+    case followers(value: [String])
+    case projects(value: [String])
+}
+
+func getUser(name: String) async -> User {
+    await withTaskGroup(of: Result.self) { group in
+        group.addTask {
+            .info(value: await getUserInfo(name))
+        }
+
+        group.addTask {
+            .followers(value: await getFollowers(name))
+        }
+
+        group.addTask {
+            .projects(value: await getProjects(name))
+        }
+
+        var info: String? = nil
+        var followers: [String]? = nil
+        var projects: [String]? = nil
+        for await r in group {
+            switch r {
+            case .info(value: let value):
+                info = value
+            case .followers(value: let value):
+                followers = value
+            case .projects(value: let value):
+                projects = value
+            }
+        }
+
+        return User(name: name, info: info ?? "", followers: followers ?? [], projects: projects ?? [])
+    }
+}
+
+func getUserNew(name: String) async -> User {
+    async let info = getUserInfo(name)
+            async let followers = getFollowers(name)
+            async let projects = getProjects(name)
+
+    return User(name: name, info: await info, followers: await followers, projects: await projects)
+}
+
+func getUsers(names: [String]) async -> [User] {
+    await withTaskGroup(of: User.self) { group in
+        for name in names {
+            group.addTask {
+                await getUser(name: name)
+            }
+        }
+
+        return await group.reduce(into: Array<User>()) { (partialResult, user) in
+            partialResult.append(user)
+        }
+    }
+}
+
+func getUsersNew(names: [String]) async throws -> [User] {
+    let tasks = names.map { name in
+        Task { () -> User in
+            print("0 get \(name)")
+            try await Task.sleep(nanoseconds: 500_000_000)
+            print("1 getting \(name), \(Task.isCancelled)")
+            return await getUser(name: name)
+        }
+    }
+
+    return try await withTaskCancellationHandler(operation: {
+        var users = Array<User>()
+        for task in tasks {
+            users.append(try await task.value)
+        }
+        return users
+    }, onCancel: {
+        tasks.forEach { task in task.cancel() }
+    })
 }

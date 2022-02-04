@@ -24,3 +24,27 @@ func sc03_01() {
 
     Thread.sleep(forTimeInterval: 1)
 }
+
+func errorThrown() async throws {
+    throw "Runtime Error"
+}
+
+func sc_03_02() async throws {
+    let task = Task {
+        try await errorThrown()
+    }
+
+    await Task.sleep(1000_000_000)
+}
+
+func sc_03_03() async throws {
+    let task = Task {
+        try await errorThrown()
+    }
+
+    do {
+        try await task.value
+    } catch {
+        print(error)
+    }
+}
