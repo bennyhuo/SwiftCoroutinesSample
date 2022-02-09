@@ -10,6 +10,7 @@
 		5949318834A9AD80DDFDBF6D /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594937FA9D84DC793383F17C /* logger.swift */; };
 		5949330A7FA2DD1B306D0930 /* sc_06_actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594939FED0E2C5B958996DC1 /* sc_06_actor.swift */; };
 		5949378DAD3EDC3B674F1F70 /* time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59493AE22858D724FC10FAA5 /* time.swift */; };
+		59493935B21AA3FE0271F2D9 /* sc_07_tasklocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59493C535666F69509E7DE25 /* sc_07_tasklocal.swift */; };
 		59493C3701AD64C8EC306463 /* sc_04_TaskGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594930C180C7B288B8858D83 /* sc_04_TaskGroup.swift */; };
 		59493C4A255129DBCD3EA353 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59493E388DD27541C542886A /* App.swift */; };
 		59493CF37FC8CCD8E4AF8C53 /* sc_05_cancellation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594933A8589294DE8DD826EA /* sc_05_cancellation.swift */; };
@@ -37,6 +38,7 @@
 		594939FED0E2C5B958996DC1 /* sc_06_actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sc_06_actor.swift; sourceTree = "<group>"; };
 		59493AE22858D724FC10FAA5 /* time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = time.swift; sourceTree = "<group>"; };
 		59493BF9E03DE329ED15D57C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
+		59493C535666F69509E7DE25 /* sc_07_tasklocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sc_07_tasklocal.swift; sourceTree = "<group>"; };
 		59493E388DD27541C542886A /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 				594937FA9D84DC793383F17C /* logger.swift */,
 				59493AE22858D724FC10FAA5 /* time.swift */,
 				594939FED0E2C5B958996DC1 /* sc_06_actor.swift */,
+				59493C535666F69509E7DE25 /* sc_07_tasklocal.swift */,
 			);
 			path = coroutines;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 				5949318834A9AD80DDFDBF6D /* logger.swift in Sources */,
 				5949378DAD3EDC3B674F1F70 /* time.swift in Sources */,
 				5949330A7FA2DD1B306D0930 /* sc_06_actor.swift in Sources */,
+				59493935B21AA3FE0271F2D9 /* sc_07_tasklocal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
