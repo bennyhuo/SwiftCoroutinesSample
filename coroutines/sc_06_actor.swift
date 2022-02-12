@@ -22,7 +22,7 @@ extension BankAccount {
 }
 
 extension BankAccount: CustomStringConvertible {
-        nonisolated
+    nonisolated
     var description: String {
         "Bank account #\(accountNumber)"
     }
@@ -33,14 +33,11 @@ extension BankAccount: Hashable {
         lhs.accountNumber == rhs.accountNumber
     }
 
-        nonisolated
-
-    func hash(into hasher: inout Hasher) {
+    nonisolated func hash(into hasher: inout Hasher) {
         hasher.combine(accountNumber)
     }
 
-        nonisolated
-    var hashValue: Int {
+    nonisolated var hashValue: Int {
         get {
             accountNumber.hashValue
         }
